@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "seedcase_deploy/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "seedcase_deploy/wsgi.py"
+    }
+  ]
+}
