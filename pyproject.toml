@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "seedcase-deploy"
+version = "0.1.0"
+description = "Project for testing different cloud services"
+authors = ["Philip Hjorth Christiansen <pch@mjolner.dk>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Django = "4.2.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
