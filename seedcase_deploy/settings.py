@@ -88,6 +88,7 @@ WSGI_APPLICATION = 'seedcase_deploy.wsgi.app'
 
 # Create persistence folder for stuff to persist between executions like database and files folder
 PERSISTENCE_PATH = os.path.join(BASE_DIR, 'persistence')
+print('PersistencePath', PERSISTENCE_PATH)
 if not os.path.isdir(PERSISTENCE_PATH):
     os.mkdir(PERSISTENCE_PATH)
 
