@@ -60,6 +60,8 @@ Requires maybe a bit more work, but also seems more customizable. render.yaml or
 - whitenoise was needed to serve static files
 - build.sh script is added
 - gunicorn is needed 'poetry add gunicorn'
+- We build the application with the script './build.sh'
+- We run the application with 'gunicorn seedcase_deploy.wsgi:app'
 
 
 ## Digital Ocean
