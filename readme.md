@@ -8,6 +8,10 @@ Every branch automatically creates a preview which is pretty nice.
 
 Maybe there is too much magic? And Vercel does not support docker which could be relevant
 
+1. whitenoise was needed to serve static files. https://whitenoise.readthedocs.io/en/latest/
+
 # Render
 I followed this link https://render.com/docs/deploy-django. Seems to support poetry and docker. 
-Requires maybe a bit more work. render.yaml or manual deploy 
+Requires maybe a bit more work. render.yaml or manual deploy
+
+1. whitenoise was needed to serve static files
