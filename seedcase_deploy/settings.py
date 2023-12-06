@@ -86,10 +86,15 @@ WSGI_APPLICATION = 'seedcase_deploy.wsgi.app'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Create persistence folder for stuff to persist between executions like database and files folder
+PERSISTENCE_PATH = os.path.join(BASE_DIR, 'persistence')
+if not os.path.isdir(PERSISTENCE_PATH):
+    os.mkdir(PERSISTENCE_PATH)
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'persistence/db.sqlite3',
     }
 }
 
@@ -129,9 +134,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
-# used by staticcollect
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
