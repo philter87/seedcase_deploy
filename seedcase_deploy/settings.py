@@ -31,6 +31,10 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
+DIGITAL_OCEAN_HOSTNAMES = os.getenv("DJANGO_ALLOWED_HOSTS")
+if DIGITAL_OCEAN_HOSTNAMES:
+    ALLOWED_HOSTS.append(DIGITAL_OCEAN_HOSTNAMES.split(","))
+
 
 # Application definition
 
@@ -125,6 +129,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# used by staticcollect
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
