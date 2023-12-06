@@ -19,3 +19,5 @@ Requires maybe a bit more work. render.yaml or manual deploy
 - whitenoise was needed to serve static files
 - build.sh script is added
 - gunicorn is needed 'poetry add gunicorn'
+- Python version (default=3.11.6) is set by setting PYTHON_VERSION in render
+- Allowed host is added using 
