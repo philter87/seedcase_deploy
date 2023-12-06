@@ -90,7 +90,10 @@ WSGI_APPLICATION = 'seedcase_deploy.wsgi.app'
 PERSISTENCE_PATH = os.path.join(BASE_DIR, 'persistence')
 print('PersistencePath', PERSISTENCE_PATH)
 if not os.path.isdir(PERSISTENCE_PATH):
-    os.mkdir(PERSISTENCE_PATH)
+    try:
+        os.mkdir(PERSISTENCE_PATH)
+    except:
+        print("Unable to create persistence path: ", PERSISTENCE_PATH)
 
 DATABASES = {
     'default': {
