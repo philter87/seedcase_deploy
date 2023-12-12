@@ -53,6 +53,7 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Build and push image
+        id: build
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -60,3 +61,14 @@ jobs:
           push: true
           cache-from: type=registry,ref=philter87/django:ci
           cache-to: type=inline
+      - name: Create Render service preview
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://api.render.com/v1/services/srv-clno47thuusc738qehcg/preview'
+          method: 'POST'
+          bearerToken: ${{ secrets.RENDER_API_KEY }}
+
+          # Here we specify the digest of the image we just
+          # built. You can alternatively provide the image's
+          # tag (main) instead of a digest.
+          data: '{"imagePath": "docker.io@${{ steps.build.outputs.digest }}"}'
