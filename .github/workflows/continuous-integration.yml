@@ -8,3 +8,9 @@ jobs:
       - run: echo "Hello World! ${{ github.event_name }}, ${{ runner.os}}, ${{ github.ref }}, $ {{ github.repository }}"
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Install poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.7.1
+          virtualenvs-create: true
+          virtualenvs-in-project: false
