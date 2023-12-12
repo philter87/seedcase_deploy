@@ -33,6 +33,6 @@ jobs:
         run: poetry run python manage.py test
 
       - name: Semantic version for application
-        id: version
+        id: appVersion
         uses: paulhatch/semantic-version@v5.3.0
-      - run: echo "Semantic version ${{ version }}"
+      - run: echo "Semantic version ${{ steps.appVersion.outputs.version }}"
