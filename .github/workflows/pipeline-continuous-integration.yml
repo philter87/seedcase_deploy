@@ -71,4 +71,4 @@ jobs:
           # Here we specify the digest of the image we just
           # built. You can alternatively provide the image's
           # tag (main) instead of a digest.
-          data: '{"imagePath": "docker.io@${{ steps.build.outputs.digest }}"}'
+          data: '{"imagePath": "docker.io/philter87/django:0.0.3"}'
