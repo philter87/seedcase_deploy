@@ -6,6 +6,7 @@ on:
   push:
     branches: main
 
+
 jobs:
   BuildAndTest:
     name: Build and test
@@ -39,8 +40,6 @@ jobs:
           DEFAULT_BUMP: patch
           DRY_RUN: true
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN_FOR_VERSIONS}}
-      - name: Set version
-        run: echo "IMAGE_PREVIEW=philter87/django:${{ steps.semanticVersion.outputs.tag }}-preview-${{github.run_number}}" >> $GITHUB_ENV
       - name: Echo version
         run: echo "IMAGE_PREVIEW=$IMAGE_PREVIEW, tag=${{ steps.semanticVersion.outputs.tag }}, new_tag=${{ steps.semanticVersion.outputs.new_tag}}, part=${{ steps.semanticVersion.outputs.part }}"
 
@@ -58,7 +57,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          tags: $IMAGE_PREVIEW, philter87/django:ci
+          tags: philter87/django:${{ steps.semanticVersion.outputs.tag }}-preview-${{github.run_number}}, philter87/django:ci
           push: true
           cache-from: type=registry,ref=philter87/django:ci
           cache-to: type=inline
@@ -68,5 +67,5 @@ jobs:
           url: 'https://api.render.com/v1/services/srv-cls6nrfqd2ns73e0t6jg/preview'
           method: 'POST'
           bearerToken: ${{ secrets.RENDER_API_KEY }}
-          data: '{"imagePath": "${{IMAGE_PREVIEW}}"}'
+          data: '{"imagePath": "philter87/django:${{ steps.semanticVersion.outputs.tag }}-preview-${{github.run_number}}"}'
           # docker.io/philter87/django:0.0.3
