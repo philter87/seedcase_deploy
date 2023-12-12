@@ -18,5 +18,6 @@ jobs:
           python-version: '3.11'
           cache: 'poetry'
       - run: poetry install
+      - run: ls
       - run: poetry run manage.py migrate
       - run: poetry run manage.py test
