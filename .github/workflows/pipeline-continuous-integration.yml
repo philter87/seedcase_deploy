@@ -64,8 +64,8 @@ jobs:
       - name: Create Render service preview
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://api.render.com/v1/services/srv-clno47thuusc738qehcg/preview'
+          url: 'https://api.render.com/v1/services/srv-cls6nrfqd2ns73e0t6jg/preview'
           method: 'POST'
           bearerToken: ${{ secrets.RENDER_API_KEY }}
-          data: '{"imagePath": "docker.io/philter87/django:0.0.3"}'
+          data: '{"imagePath": "docker.io/philter87/django:${{steps.build.outputs.digest}}"}'
           # docker.io/philter87/django:0.0.3
