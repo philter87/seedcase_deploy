@@ -1,14 +1,18 @@
 name: Continuous Integration
 
+
 on:
   pull_request:
   push:
-    branches: master
+    branches: main
+
 
 jobs:
   Install:
-    - uses: actions/setup-python@v3
-      with:
-        python-version: '3.11'
-        cache: 'poetry'
-    - run: poetry install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
+          cache: 'poetry'
+      - run: poetry install

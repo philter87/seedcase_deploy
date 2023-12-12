@@ -4,7 +4,7 @@ name: Docker Image Build and Push
 on:
   pull_request:
   push:
-    branches: master
+    branches: main
 
 
 jobs:
