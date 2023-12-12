@@ -1,4 +1,4 @@
-name: Docker Image Build and Push
+name: Continuous Integration
 
 on:
   pull_request:
@@ -6,8 +6,9 @@ on:
     branches: master
 
 jobs:
-  - uses: actions/setup-python@v3
-    with:
-      python-version: '3.11'
-      cache: 'poetry'
-  - run: poetry install
+  Install:
+    - uses: actions/setup-python@v3
+      with:
+        python-version: '3.11'
+        cache: 'poetry'
+    - run: poetry install
