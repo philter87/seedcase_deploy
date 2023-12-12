@@ -8,7 +8,7 @@ on:
 
 
 jobs:
-  Install:
+  Build and Test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -37,9 +37,7 @@ jobs:
         uses: anothrNick/github-tag-action@1.67.0
         env:
           DEFAULT_BUMP: patch
-          WITH_V: true
-          PRERELEASE: true
-          DRYRUN: true
+          DRY_RUN: true
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN_FOR_VERSIONS}}
       - name: Echo version
         run: echo "tag=${{ steps.semanticVersion.outputs.tag }}, new_tag=${{ steps.semanticVersion.outputs.new_tag}}, part=${{ steps.semanticVersion.outputs.part }}"
@@ -57,7 +55,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          tags: philter87/django:${{ steps.semanticVersion.outputs.tag }}, philter87/django:ci
+          tags: philter87/django:${{ steps.semanticVersion.outputs.tag }}-preview-${{github.run_number}}, philter87/django:ci
           push: true
           cache-from: type=registry,ref=philter87/django:ci
           cache-to: type=inline
