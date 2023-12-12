@@ -6,10 +6,6 @@ on:
   push:
     branches: main
 
-env:
-  IMAGE_PREVIEW: "philter87/django:${{ steps.semanticVersion.outputs.tag }}-preview-${{github.run_number}}"
-  APP_VERSION: "${{ steps.semanticVersion.outputs.tag }}"
-
 jobs:
   BuildAndTest:
     name: Build and test
@@ -43,6 +39,8 @@ jobs:
           DEFAULT_BUMP: patch
           DRY_RUN: true
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN_FOR_VERSIONS}}
+      - name: Set version
+        run: echo "IMAGE_PREVIEW="philter87/django:${{ steps.semanticVersion.outputs.tag }}-preview-${{github.run_number}}"
       - name: Echo version
         run: echo "IMAGE_PREVIEW=$IMAGE_PREVIEW, tag=${{ steps.semanticVersion.outputs.tag }}, new_tag=${{ steps.semanticVersion.outputs.new_tag}}, part=${{ steps.semanticVersion.outputs.part }}"
 
