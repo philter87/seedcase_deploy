@@ -18,3 +18,4 @@ jobs:
           python-version: '3.11'
           cache: 'poetry'
       - run: poetry install
+      - run: ls
