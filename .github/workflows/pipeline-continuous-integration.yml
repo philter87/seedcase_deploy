@@ -67,8 +67,4 @@ jobs:
           url: 'https://api.render.com/v1/services/srv-clno47thuusc738qehcg/preview'
           method: 'POST'
           bearerToken: ${{ secrets.RENDER_API_KEY }}
-
-          # Here we specify the digest of the image we just
-          # built. You can alternatively provide the image's
-          # tag (main) instead of a digest.
-          data: '{"imagePath": "docker.io/philter87/django:0.0.3"}'
+          data: '{"imagePath": "docker.io/philter87/django:${{ steps.build.outputs.digest }}"}'
