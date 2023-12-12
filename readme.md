@@ -10,7 +10,7 @@ We want to support multiple ways to install the application on a server
 We can use PyInstaller to package the django application: https://github.com/pyinstaller/pyinstaller/wiki/Recipe-Executable-From-Django
 
 ```bash
-py -m PyInstaller --name seedcase .\manage.py
+python -m PyInstaller --name seedcase .\manage.py
 ```
 
 The executables are added to the 'dist' folder
@@ -19,16 +19,18 @@ The executables are added to the 'dist' folder
 You can run the django application by executing this command:
 
 ```bash
-docker build . --tag seedcase_deploy_image
-docker run -i -d -p 8000:8000 --mount type=bind,source= seedcase_deploy_image
+# Run the image with the following command
+docker run -i -d -p 9999:8000 -v persistence:/app/persistence philter87/django:0.0.1
+# go to http://localhost:9999/
 
-# go to http://127.0.0.1:8000/
+# You can build the image with these commands:
+docker build . --tag philter87/django:0.0.1
 
-# force stop and delete container
-docker rm -f <part-of-the-id>
+# You can publish to DockerHub with these commands:
+docker login
+docker push philter87/django:0.0.1
 
-# Eventually, we might push the image to DockerHub and then we can run the image like this:
-docker run -i -d -p 8000:8000
+# Go to https://hub.docker.com/repository/docker/philter87/django to see image description
 ```
 
 # Cloud providers

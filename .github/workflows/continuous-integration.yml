@@ -1,0 +1,10 @@
+name: Continuous Integration Seedcase
+run-name: CI for Seedcase
+on: [push]
+jobs:
+  Testing:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello World! ${{ github.event_name }}, ${{ runner.os}}, ${{ github.ref }}, $ {{ github.repository }}"
+      - name: Checkout code
+        uses: actions/checkout@v4

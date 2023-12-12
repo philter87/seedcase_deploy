@@ -22,3 +22,4 @@ COPY . .
 EXPOSE 8000
 
 ENTRYPOINT ["./entrypoint.sh"]
+# ENTRYPOINT ["./entrypoint-with-tls.sh"]
