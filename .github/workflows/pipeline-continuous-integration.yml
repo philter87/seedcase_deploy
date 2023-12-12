@@ -36,9 +36,11 @@ jobs:
         id: semanticVersion
         uses: anothrNick/github-tag-action@1.67.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN_FOR_VERSIONS}}
           DEFAULT_BUMP: patch
+          WITH_V: true
+          PRERELEASE: true
           DRYRUN: true
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN_FOR_VERSIONS}}
       - name: Echo version
         run: echo "tag=${{ steps.semanticVersion.outputs.tag }}, new_tag=${{ steps.semanticVersion.outputs.new_tag}}, part=${{ steps.semanticVersion.outputs.part }}"
 
