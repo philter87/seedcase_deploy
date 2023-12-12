@@ -52,5 +52,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          tags: philter87/django:${{ steps.appVersion.outputs.version }}, philter87/django:ci
           push: true
-          tags: philter87/django:${{ steps.appVersion.outputs.version }}
+          cache-from: type=registry,ref=philter87/django:ci
+          cache-to: type=inline
