@@ -37,7 +37,7 @@ jobs:
         uses: paulhatch/semantic-version@v5.3.0
 
       - name: Semantic version Test
-        run: echo "Semantic version changed=${{ steps.appVersion.outputs.changed }}, type=${{ steps.appVersion.outputs.version_type }}, version=${{ steps.appVersion.outputs.version }}"
+        run: echo "Semantic version changed=${{ steps.appVersion.outputs.changed }}, type=${{ steps.appVersion.outputs.version_type }}, version=${{ steps.appVersion.outputs.version }}, version_tag=${{ steps.appVersion.outputs.version_tag }}"
 
       - name: Setup docker
         uses: docker/setup-buildx-action@v3
