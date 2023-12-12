@@ -1,0 +1,13 @@
+name: Docker Image Build and Push
+
+on:
+  pull_request:
+  push:
+    branches: master
+
+jobs:
+  - uses: actions/setup-python@v3
+    with:
+      python-version: '3.11'
+      cache: 'poetry'
+  - run: poetry install

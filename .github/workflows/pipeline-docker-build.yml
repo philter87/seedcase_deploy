@@ -1,6 +1,12 @@
-name: Continuous Integration Seedcase
-run-name: CI for Seedcase
-on: [push]
+name: Docker Image Build and Push
+
+
+on:
+  pull_request:
+  push:
+    branches: master
+
+
 jobs:
   Testing:
     runs-on: ubuntu-latest
