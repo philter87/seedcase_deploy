@@ -67,4 +67,5 @@ jobs:
           url: 'https://api.render.com/v1/services/srv-clno47thuusc738qehcg/preview'
           method: 'POST'
           bearerToken: ${{ secrets.RENDER_API_KEY }}
-          data: '{"imagePath": "docker.io/philter87/django:${{ steps.build.outputs.digest }}"}'
+          data: '{"imagePath": "docker.io/philter87/django:0.0.3"}'
+          # docker.io/philter87/django:0.0.3
