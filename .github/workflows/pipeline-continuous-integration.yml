@@ -52,7 +52,8 @@ jobs:
       - name: Echo stuff
         run: | 
           echo "github_ref=${{github.ref}}, github_event_name=${{ github.event_name }}, tag=${{ steps.semanticVersion.outputs.tag }}, new_tag=${{ steps.semanticVersion.outputs.new_tag}}, part=${{ steps.semanticVersion.outputs.part }}"
-          echo "image ${{ steps.outputs.imageVersions.image}}"
+          echo "image ${{ steps.imageVersions.outputs.image}}"
+          echo "imageRelease ${{ steps.imageVersions.outputs.imageRelease}}"
           echo "imageReleasePath ${{ steps.imageVersions.outputs.imageReleasePath}}"
           echo "imagePreview ${{ steps.imageVersions.outputs.imagePreview}}"
           echo "imagePreviewPath ${{ steps.imageVersions.outputs.imagePreviewPath}}"
