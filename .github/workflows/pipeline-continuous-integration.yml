@@ -43,14 +43,12 @@ jobs:
       - name: Define variables
         id: imageVersions
         run: | 
-          {
-            "image=philter87/django"
-            "registry=docker.io"
-            "imageRelease=$image:${{ steps.semanticVersion.outputs.tag }}"
-            "imageReleasePath=$registry/$imageRelease"
-            "imagePreview=$imageRelease-preview-${{github.run_number}}"
-            "imagePreviewPath=$registry/$imagePreview"
-          } >> $GITHUB_OUTPUT
+          echo "image=philter87/django" >> $GITHUB_OUTPUT 
+          echo "registry=docker.io" >> $GITHUB_OUTPUT
+          echo "imageRelease=$image:${{ steps.semanticVersion.outputs.tag }}" >> $GITHUB_OUTPUT
+          echo "imageReleasePath=$registry/$imageRelease" >> $GITHUB_OUTPUT
+          echo "imagePreview=$imageRelease-preview-${{github.run_number}}" >> $GITHUB_OUTPUT
+          echo "imagePreviewPath=$registry/$imagePreview" >> $GITHUB_OUTPUT
       - name: Echo stuff
         run: | 
           echo "github_ref=${{github.ref}}, github_event_name=${{ github.event_name }}, tag=${{ steps.semanticVersion.outputs.tag }}, new_tag=${{ steps.semanticVersion.outputs.new_tag}}, part=${{ steps.semanticVersion.outputs.part }}"
