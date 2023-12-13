@@ -48,7 +48,7 @@ jobs:
         run: | 
           echo "imageRelease=$IMAGE_NAME:${{ steps.semanticVersion.outputs.tag }}" >> $GITHUB_OUTPUT
           echo "imagePreview=$IMAGE_NAME:${{ steps.semanticVersion.outputs.tag }}-preview-${{github.run_number}}" >> $GITHUB_OUTPUT
-          echo "imageCi=$IMAGE_NAME:ci"
+          echo "imageCi=$IMAGE_NAME:ci" >> $GITHUB_OUTPUT
       - name: Echo stuff
         run: | 
           echo "github_ref=${{github.ref}}, github_event_name=${{ github.event_name }}, tag=${{ steps.semanticVersion.outputs.tag }}, new_tag=${{ steps.semanticVersion.outputs.new_tag}}, part=${{ steps.semanticVersion.outputs.part }}"
