@@ -48,6 +48,7 @@ jobs:
         run: | 
           echo "imageRelease=$IMAGE_NAME:${{ steps.semanticVersion.outputs.tag }}" >> $GITHUB_OUTPUT
           echo "imagePreview=$IMAGE_NAME:${{ steps.semanticVersion.outputs.tag }}-preview-${{github.run_number}}" >> $GITHUB_OUTPUT
+          echo "imageCi=$IMAGE_NAME:ci"
       - name: Echo stuff
         run: | 
           echo "github_ref=${{github.ref}}, github_event_name=${{ github.event_name }}, tag=${{ steps.semanticVersion.outputs.tag }}, new_tag=${{ steps.semanticVersion.outputs.new_tag}}, part=${{ steps.semanticVersion.outputs.part }}"
@@ -67,9 +68,9 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          tags: ${{ steps.imageVersions.outputs.imagePreview }}, ${{env.IMAGE_NAME}}:ci
+          tags: ${{ steps.imageVersions.outputs.imagePreview }}, ${{steps.imageVersions.outputs.imageCi}}
           push: true
-          cache-from: type=registry,ref=${{env.IMAGE_NAME}}:ci
+          cache-from: type=registry,ref=${{steps.imageVersions.outputs.imageCi}}
           cache-to: type=inline
 
       - name: Deploy Render preview on pull-request, but consider to let render.com solve this to avoid creating to many preview environments
