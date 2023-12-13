@@ -11,8 +11,8 @@ env:
   IMAGE_REGISTRY: docker.io
 
 jobs:
-  BuildAndTest:
-    name: Build and test
+  Test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -35,25 +35,27 @@ jobs:
 
       - name: Run unit tests
         run: poetry run python manage.py test
-
-      - name: Semantic version
+  Build:
+    name: Build release image
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Add tag for new version
         id: semanticVersion
         uses: anothrNick/github-tag-action@1.67.0
         env:
           DEFAULT_BUMP: patch
-          DRY_RUN: ${{ github.ref != 'refs/heads/main' }}
+          DRY_RUN: false
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN_FOR_VERSIONS}}
       - name: Define variables
         id: imageVersions
-        run: | 
+        run: |
           echo "imageRelease=$IMAGE_NAME:${{ steps.semanticVersion.outputs.tag }}" >> $GITHUB_OUTPUT
           echo "imagePreview=$IMAGE_NAME:${{ steps.semanticVersion.outputs.tag }}-preview-${{github.run_number}}" >> $GITHUB_OUTPUT
           echo "imageCi=$IMAGE_NAME:ci" >> $GITHUB_OUTPUT
-      - name: Echo stuff
-        run: | 
-          echo "github_ref=${{github.ref}}, github_event_name=${{ github.event_name }}, tag=${{ steps.semanticVersion.outputs.tag }}, new_tag=${{ steps.semanticVersion.outputs.new_tag}}, part=${{ steps.semanticVersion.outputs.part }}"
-          echo "imageRelease ${{ steps.imageVersions.outputs.imageRelease}}"
-          echo "imagePreview ${{ steps.imageVersions.outputs.imagePreview}}"
+
       - name: Setup docker
         uses: docker/setup-buildx-action@v3
 
@@ -68,16 +70,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          tags: ${{ steps.imageVersions.outputs.imagePreview }}, ${{steps.imageVersions.outputs.imageCi}}
+          tags: $IMAGE_NAME@${{ steps.semanticVersion.outputs.tag }}, $IMAGE_NAME@ci
           push: true
-          cache-from: type=registry,ref=${{steps.imageVersions.outputs.imageCi}}
+          cache-from: type=registry,ref=$IMAGE_NAME@ci
           cache-to: type=inline
-
-      - name: Deploy Render preview on pull-request, but consider to let render.com solve this to avoid creating to many preview environments
-        if: github.ref != 'refs/heads/main'
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: 'https://api.render.com/v1/services/srv-cls6nrfqd2ns73e0t6jg/preview'
-          method: 'POST'
-          bearerToken: ${{ secrets.RENDER_API_KEY }}
-          data: '{"imagePath": "$IMAGE_REGISTRY/${{ steps.imageVersions.outputs.imagePreview }}"}'
