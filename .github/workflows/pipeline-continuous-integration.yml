@@ -6,10 +6,6 @@ on:
   push:
     branches: main
 
-env:
-  IMAGE_NAME: philter87/django
-  IMAGE_REGISTRY: docker.io
-
 jobs:
   Test:
     name: Test
@@ -49,12 +45,6 @@ jobs:
           DEFAULT_BUMP: patch
           DRY_RUN: false
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN_FOR_VERSIONS}}
-      - name: Define variables
-        id: imageVersions
-        run: |
-          echo "imageRelease=$IMAGE_NAME:${{ steps.semanticVersion.outputs.tag }}" >> $GITHUB_OUTPUT
-          echo "imagePreview=$IMAGE_NAME:${{ steps.semanticVersion.outputs.tag }}-preview-${{github.run_number}}" >> $GITHUB_OUTPUT
-          echo "imageCi=$IMAGE_NAME:ci" >> $GITHUB_OUTPUT
 
       - name: Setup docker
         uses: docker/setup-buildx-action@v3
@@ -70,7 +60,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          tags: $IMAGE_NAME:${{ steps.semanticVersion.outputs.tag }}, $IMAGE_NAME:ci
+          tags: "philter87/django:${{ steps.semanticVersion.outputs.tag }}", "philter87/django:ci"
           push: true
-          cache-from: type=registry,ref=$IMAGE_NAME:ci
+          cache-from: type=registry,ref="philter87/django:ci"
           cache-to: type=inline
