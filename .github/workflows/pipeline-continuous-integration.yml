@@ -38,11 +38,25 @@ jobs:
         uses: anothrNick/github-tag-action@1.67.0
         env:
           DEFAULT_BUMP: patch
-          DRY_RUN: true
+          DRY_RUN: github.ref != 'refs/heads/main'
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN_FOR_VERSIONS}}
-      - name: Echo version
-        run: echo "IMAGE_PREVIEW=$IMAGE_PREVIEW, tag=${{ steps.semanticVersion.outputs.tag }}, new_tag=${{ steps.semanticVersion.outputs.new_tag}}, part=${{ steps.semanticVersion.outputs.part }}"
-
+      - name: Define variables
+        id: imageVersions
+        run: | 
+          {
+            "image=philter87/django"
+            "registry=docker.io"
+            "imageRelease=$image:${{ steps.semanticVersion.outputs.tag }}"
+            "imageReleasePath=$registry/$imageRelease"
+            "imagePreview=$imageRelease-preview-${{github.run_number}}"
+            "imagePreviewPath=$registry/$imagePreview"
+          } >> $GITHUB_OUTPUT
+      - name: Echo stuff
+        run: | 
+          echo "github_ref=${{github.ref}}, github_event_name=${{ github.event_name }}, tag=${{ steps.semanticVersion.outputs.tag }}, new_tag=${{ steps.semanticVersion.outputs.new_tag}}, part=${{ steps.semanticVersion.outputs.part }}"
+          echo "image=${{ steps.outputs.imageVersions.image}}"
+          echo "imageReleasePath=${{ steps.imageVersions.outputs.imageReleasePath}}"
+          echo "imagePreviewPath=${{ steps.imageVersions.outputs.imagePreviewPath}}"
       - name: Setup docker
         uses: docker/setup-buildx-action@v3
 
@@ -57,15 +71,16 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          tags: philter87/django:${{ steps.semanticVersion.outputs.tag }}-preview-${{github.run_number}}, philter87/django:ci
+          tags: ${{ steps.imageVersions.outputs.imagePreview }}, philter87/django:ci
           push: true
           cache-from: type=registry,ref=philter87/django:ci
           cache-to: type=inline
-      - name: Create Render service preview
+
+      - name: Deploy Render preview on pull-request, but consider to let render.com solve this to avoid creating to many preview environments
+        if: github.ref != 'refs/heads/main'
         uses: fjogeleit/http-request-action@v1
         with:
           url: 'https://api.render.com/v1/services/srv-cls6nrfqd2ns73e0t6jg/preview'
           method: 'POST'
           bearerToken: ${{ secrets.RENDER_API_KEY }}
-          data: '{"imagePath": "docker.io/philter87/django:${{ steps.semanticVersion.outputs.tag }}-preview-${{github.run_number}}"}'
-          # docker.io/philter87/django:0.0.3
+          data: '{"imagePath": "${{ steps.imageVersions.outputs.imagePreviewPath }}"}'
