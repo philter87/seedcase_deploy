@@ -7,7 +7,7 @@ on:
     branches: main
 
 env:
-  IMAGE_NAME: django/philip
+  IMAGE_NAME: philter87/django
   IMAGE_REGISTRY: docker.io
 
 jobs:
