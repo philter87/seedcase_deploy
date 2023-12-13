@@ -67,9 +67,9 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          tags: ${{ steps.imageVersions.outputs.imagePreview }}, $IMAGE_NAME:ci
+          tags: ${{ steps.imageVersions.outputs.imagePreview }}, ${{IMAGE_NAME}}:ci
           push: true
-          cache-from: type=registry,ref=$IMAGE_NAME:ci
+          cache-from: type=registry,ref=${{IMAGE_NAME}}:ci
           cache-to: type=inline
 
       - name: Deploy Render preview on pull-request, but consider to let render.com solve this to avoid creating to many preview environments
