@@ -20,7 +20,7 @@ You can run the django application by executing this command:
 
 ```bash
 # Run the image with the following command
-docker run -i -d -p 9999:8000 -v persistence:/app/persistence philter87/django:0.0.1
+docker run -i -d -p 9999:10000 -v persistence:/app/persistence philter87/django:0.0.1
 # go to http://localhost:9999/
 
 # You can build the image with these commands:

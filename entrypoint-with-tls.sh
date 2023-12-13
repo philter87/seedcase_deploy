@@ -16,4 +16,4 @@ then
 fi
 
 poetry run python manage.py migrate
-poetry run gunicorn --certfile="persistence/tls.cert" --keyfile="persistence/tls.key" seedcase_deploy.wsgi:app --bind 0.0.0.0:8000
+poetry run gunicorn --certfile="persistence/tls.cert" --keyfile="persistence/tls.key" seedcase_deploy.wsgi:app --bind 0.0.0.0:10000

@@ -19,7 +19,7 @@ RUN poetry install --no-cache
 
 COPY . .
 
-EXPOSE 8000
+EXPOSE 10000
 RUN chmod +x entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
