@@ -70,7 +70,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          tags: $IMAGE_NAME@${{ steps.semanticVersion.outputs.tag }}, $IMAGE_NAME@ci
+          tags: $IMAGE_NAME:${{ steps.semanticVersion.outputs.tag }}, $IMAGE_NAME:ci
           push: true
-          cache-from: type=registry,ref=$IMAGE_NAME@ci
+          cache-from: type=registry,ref=$IMAGE_NAME:ci
           cache-to: type=inline

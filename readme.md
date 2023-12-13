@@ -51,18 +51,14 @@ Maybe there is too much magic? And Vercel does not support docker which could be
 
 ## Render
 
-Live at: https://seedcase-deploy-demo.onrender.com
+Live at: https://philip-django-auto.onrender.com
 
-I followed this link https://render.com/docs/deploy-django. Seems to support poetry and docker. 
-Render does not deploy all branch commits by default, but you can enable pull-request-previews: https://render.com/docs/pull-request-previews
+We rely on a Dockerfile in the repository to deploy the service.
 
-Requires maybe a bit more work, but also seems more customizable. render.yaml or manual deploy
+I got a bit of help from https://render.com/docs/deploy-django to figure out how to add static files
 
-- 
 - whitenoise was needed to serve static files
-- build.sh script is added
 - gunicorn is needed 'poetry add gunicorn'
-- We build the application with the script './build.sh'
 - We run the application with 'gunicorn seedcase_deploy.wsgi:app'
 
 
