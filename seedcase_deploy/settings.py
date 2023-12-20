@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-3q6k3#7(rx8l@qp7ls-+*-pnsv2ham-8uvr7vl)*4l(m6dcs&2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', 'localhost', '.fly.dev']
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:

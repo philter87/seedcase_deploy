@@ -13,7 +13,6 @@ RUN pip install poetry==1.7.1
 WORKDIR /app
 
 COPY pyproject.toml poetry.lock ./
-RUN touch README.md
 
 RUN poetry install --no-cache
 
