@@ -1,19 +1,39 @@
-# Install options
-We want to support multiple ways to install the application on a server
-- An executable where the sqlite database and files are stored locally
-- Simply cloning and running the python code 
-- A single docker image where sqlite is used
-- Docker compose, where everything is installed. Django, FileServer, Postgres database, Lets encrypt? etc
-
-## Executable
-
-We can use PyInstaller to package the django application: https://github.com/pyinstaller/pyinstaller/wiki/Recipe-Executable-From-Django
+# How was this created
 
 ```bash
-python -m PyInstaller --name seedcase .\manage.py
-```
 
-The executables are added to the 'dist' folder
+# The commands are based on: https://docs.render.com/docs/deploy-django
+# but we are using a Docker
+
+cd to-folder-where-code-should-be
+
+# Install poetry globally (Poetry solves three things: deterministic dependency resolution, project isolation and python version)
+python -m pip install poetry
+# or 'pip install poetry'
+
+# Initialize poetry and add dependencies to the virtual environment
+poetry init
+poetry add Django=4.2.8
+poetry add gunicorn
+
+# The virtual environment is automatically used when you prefix a command with 'poetry run'
+# so you can run a script with 'poetry run python some_code.py'
+
+# Create a django project where current folder is the root
+poetry run django-admin startproject seedcase_deploy .
+
+# Run django project
+poetry run python .\manage.py runserver
+
+
+# (Optional) Add a django application called 'app' or another suitable name. For more details, see https://docs.render.com/docs/deploy-django#create-the-render-app
+poetry run python manage.py startapp app
+
+# You need to add the 'app' to 'INSTALLED_APPS' in settings.py
+# And to allow deployment to render.com you need to allow the render hostname. https://docs.render.com/docs/deploy-django#go-production-ready
+
+# Create a Dockerfile and entrypoint.sh 
+```
 
 ## Docker 
 You can run the django application by executing this command:
