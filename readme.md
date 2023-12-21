@@ -106,4 +106,14 @@ flyctl launch
 flyctl deploy
 # for pull request
 flyctl deploy --config fly-pr.toml
+
+# SSH into server
+flyctl ssh console
+
+# move a single file 
+flyctl sftp get /app/persistence/db.sqlite3 remote.db.sqlite3
+
+# copy directory
+flyctl sftp shell
+> get /app/persistence NameOnLocalMachine
 ```
