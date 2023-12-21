@@ -1,10 +1,14 @@
 name: Continuous Integration
 
-
+# Deploy on push to main branch, pull requests where the target is the main branch and manual triggers
 on:
-  pull_request:
   push:
-    branches: main
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   Test:
@@ -31,6 +35,11 @@ jobs:
 
       - name: Run unit tests
         run: poetry run python manage.py test
+
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only --config fly-pr.toml
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
   Build:
     name: Build release image
     runs-on: ubuntu-latest

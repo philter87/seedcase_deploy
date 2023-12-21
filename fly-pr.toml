@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for seedcase-deploy-pr on 2023-12-21T11:50:09+01:00
+# fly.toml app configuration file generated for seedcase-deploy on 2023-12-19T14:33:09+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "seedcase-deploy"
+app = "seedcase-deploy-pr"
 primary_region = "arn"
 swap_size_mb = 512
 
