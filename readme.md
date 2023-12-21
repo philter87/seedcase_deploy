@@ -86,3 +86,34 @@ I got a bit of help from https://render.com/docs/deploy-django to figure out how
 No free instances
 - Python version (default=3.11.6) is set by setting PYTHON_VERSION in render
 - Allowed host is added using
+
+## fly.io
+Fly.io is the cheapest alternative. 5$ for an organisation and amount can be used for running a applications
+- It requires a github action to work (so it is less automated than render.com)
+- You can run postgres, but it is not a managed postgres. It will run like other apps in fly.io
+
+```bash
+# Initial setup
+flyctl auth login
+
+# creates deployment (and a fly.toml file)
+flyctl launch
+
+# Run again and tweak options seedcase-deploy-pr
+flyctl launch
+
+# Deploy with these two commands: 
+flyctl deploy
+# for pull request
+flyctl deploy --config fly-pr.toml
+
+# SSH into server
+flyctl ssh console
+
+# move a single file 
+flyctl sftp get /app/persistence/db.sqlite3 remote.db.sqlite3
+
+# copy directory
+flyctl sftp shell
+> get /app/persistence NameOnLocalMachine
+```
