@@ -91,6 +91,19 @@ No free instances
 Fly.io is the cheapest alternative. 5$ for an organisation and amount can be used for running a applications
 - It requires a github action to work (so it is less automated than render.com)
 - You can run postgres, but it is not a managed postgres. It will run like other apps in fly.io
-- You need to create volumes with flyctl tool. 
-  - ```flyctl volumes create --region arn seedcase_persistence``` 
-  - ```flyctl volumes create --region arn --app seedcase-deploy-pr seedcase_persistence_pr```
+
+```bash
+# Initial setup
+flyctl auth login
+
+# creates deployment (and a fly.toml file)
+flyctl launch
+
+# Run again and tweak options seedcase-deploy-pr
+flyctl launch
+
+# Deploy with these two commands: 
+flyctl deploy
+# for pull request
+flyctl deploy --config fly-pr.toml
+```
