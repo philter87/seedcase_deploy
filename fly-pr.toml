@@ -22,6 +22,10 @@ swap_size_mb = 512
   min_machines_running = 0
   processes = ["app"]
 
+[mounts]
+  source="seedcase-persistence-pr"
+  destination="/app/persistence"
+
 [[vm]]
   cpu_kind = "shared"
   cpus = 1
