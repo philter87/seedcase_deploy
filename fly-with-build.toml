@@ -7,7 +7,7 @@ app = "seedcase-deploy"
 primary_region = "arn"
 
 [build]
-  image = "philter87/django:ci"
+  dockerfile = "Dockerfile"
 [env]
   PORT = "10000"
 
