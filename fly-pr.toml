@@ -23,7 +23,7 @@ swap_size_mb = 512
   processes = ["app"]
 
 [mounts]
-  source="seedcase-persistence-pr"
+  source="seedcase_persistence_pr"
   destination="/app/persistence"
 
 [[vm]]
