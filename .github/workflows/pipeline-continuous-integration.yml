@@ -35,6 +35,11 @@ jobs:
 
       - name: Run unit tests
         run: poetry run python manage.py test
+
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only --config fly-pr.toml
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
   Build:
     name: Build release image
     runs-on: ubuntu-latest

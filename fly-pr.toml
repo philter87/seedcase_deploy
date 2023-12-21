@@ -3,11 +3,14 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "seedcase-deploy"
+app = "seedcase-deploy-pr"
 primary_region = "arn"
+swap_size_mb = 512
 
 [build]
+  # image = "philter87/django:ci"
   dockerfile = "Dockerfile"
+
 [env]
   PORT = "10000"
 
@@ -22,7 +25,7 @@ primary_region = "arn"
 [[vm]]
   cpu_kind = "shared"
   cpus = 1
-  memory_mb = 1024
+  memory_mb = 512
 
 [[statics]]
   guest_path = "/code/static"
